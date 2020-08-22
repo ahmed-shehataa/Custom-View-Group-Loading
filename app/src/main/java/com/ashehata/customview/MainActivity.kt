@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             rl_loading.loadingProgress(false)
 
-        }, 2000)
+        }, 10000)
 
     }
 

@@ -9,9 +9,9 @@
 
     <com.ashehata.mycustomvg.RelativeLayoutLoading
         android:id="@+id/rl_loading"
-        app:progress_color="#000"
+        app:progress_color="@android:color/holo_red_dark"
         app:show_loading="true"
-        app:container_alpha=".7"
+        app:container_alpha=".9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
