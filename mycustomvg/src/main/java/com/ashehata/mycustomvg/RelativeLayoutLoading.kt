@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.TranslateAnimation
 import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.core.graphics.drawable.DrawableCompat
 import com.ashehata.mycustomvg.base.DEFAULT_CONTAINER_ALPHA
 import com.ashehata.mycustomvg.base.DEFAULT_ELEVATION
@@ -18,7 +20,7 @@ import com.ashehata.mycustomvg.base.DEFAULT_PROGRESS_LOADING
 
 
 class RelativeLayoutLoading(context: Context, attrs: AttributeSet) :
-    RelativeLayout(context, attrs) {
+    RelativeLayout(context, attrs), View.OnLayoutChangeListener {
 
 
     /**
@@ -39,6 +41,7 @@ class RelativeLayoutLoading(context: Context, attrs: AttributeSet) :
     init {
         setupAttributes(attrs)
         drawMyView()
+        addOnLayoutChangeListener(this)
     }
 
 
@@ -78,17 +81,9 @@ class RelativeLayoutLoading(context: Context, attrs: AttributeSet) :
         }
     }
 
-    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-        super.onLayout(changed, l, t, r, b)
-        if (changed) {
-            if (showLoading) {
-                disableChild(true)
-            } else disableChild(false)
-        }
-    }
 
     private fun disableChild(b: Boolean) {
-        for (i in 0 until getChildCount()) {
+        for (i in 0 until childCount) {
             val child: View = getChildAt(i)
             child.isClickable = b
         }
@@ -127,6 +122,7 @@ class RelativeLayoutLoading(context: Context, attrs: AttributeSet) :
     }
 
     fun loadingProgress(boolean: Boolean) {
+        showLoading = false
         container?.visibility = boolean.viewVisibility()
         //startAnimations()
     }
@@ -152,5 +148,23 @@ class RelativeLayoutLoading(context: Context, attrs: AttributeSet) :
     private fun Boolean?.viewVisibility(): Int {
         if (this == null) return View.GONE
         return if (this) View.VISIBLE else View.GONE
+    }
+
+    override fun onLayoutChange(
+        p0: View?,
+        p1: Int,
+        p2: Int,
+        p3: Int,
+        p4: Int,
+        p5: Int,
+        p6: Int,
+        p7: Int,
+        p8: Int
+    ) {
+
+        if (showLoading) {
+            disableChild(false)
+        } else
+            disableChild(true)
     }
 }

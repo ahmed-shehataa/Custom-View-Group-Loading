@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -16,9 +17,13 @@ class MainActivity : AppCompatActivity() {
 
 
         btn.setOnClickListener {
-            rl_loading.loadingProgress(true)
-            startHandler()
+            //rl_loading.loadingProgress(true)
+            //startHandler()
+            btn.visibility = View.GONE
         }
+
+        //rl_loading.loadingProgress(true)
+        //rl_loading.setContainerAlpha(1F)
 
 
     }
@@ -28,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             rl_loading.loadingProgress(false)
 
-        }, 10000)
+        }, 2000)
 
     }
 
