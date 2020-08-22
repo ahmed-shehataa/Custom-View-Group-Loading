@@ -22,7 +22,7 @@ allprojects {
 
 ``` groovy
 dependencies {
-	  implementation 'com.github.Eng-AhmedShehata:Custom-View-Group-Loading:1.1'
+	  implementation 'com.github.Eng-AhmedShehata:Custom-View-Group-Loading:1.2'
 	}
 ```
 
