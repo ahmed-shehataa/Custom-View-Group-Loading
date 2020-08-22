@@ -1,0 +1,3 @@
+include ':mycustomvg'
+include ':app'
+rootProject.name = "Custom View"

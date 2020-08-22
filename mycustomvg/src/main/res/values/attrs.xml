@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RelativeLayoutLoading">
+
+        <attr name="container_alpha" format="float" />
+        <attr name="progress_color" format="color" />
+        <attr name="show_loading" format="boolean" />
+
+
+    </declare-styleable>
+</resources>
