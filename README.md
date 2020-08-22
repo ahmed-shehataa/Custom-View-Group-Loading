@@ -3,8 +3,7 @@ A simple Lib to make a progress bar indicator behind the views to show loading o
 
 
 <p float="left">
- 	<img src="photo1.png"  width="250"  />
-	<img src="photo2.png"  width="250"  />
+	<img src="ezgif-4-8212e1617656.gif"  width="250"  />
 </p>
 
 **Step 1.** Add it in your root build.gradle at the end of repositories:
