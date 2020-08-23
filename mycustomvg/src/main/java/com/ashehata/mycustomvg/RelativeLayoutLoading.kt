@@ -1,20 +1,17 @@
 package com.ashehata.mycustomvg
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.WindowManager
 import android.view.animation.TranslateAnimation
+import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
-import android.widget.Toast
-import androidx.core.graphics.drawable.DrawableCompat
 import com.ashehata.mycustomvg.base.DEFAULT_CONTAINER_ALPHA
 import com.ashehata.mycustomvg.base.DEFAULT_ELEVATION
 import com.ashehata.mycustomvg.base.DEFAULT_PROGRESS_COLOR
@@ -28,7 +25,7 @@ class RelativeLayoutLoading(context: Context, attrs: AttributeSet) :
     /**
      * for views ref
      */
-    private var parentLayout: FrameLayout? = null
+    private var parentLayout: View? = null
     private var container: FrameLayout? = null
     private lateinit var progress: ProgressBar
 
@@ -56,12 +53,12 @@ class RelativeLayoutLoading(context: Context, attrs: AttributeSet) :
         val inflater = context
             .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-        val parentLayout = inflater.inflate(R.layout.background_progress, this, true);
+        parentLayout = inflater.inflate(R.layout.background_progress, this, true)
 
 
         // set up views ref
-        container = parentLayout.findViewById(R.id.fl_container)
-        progress = parentLayout.findViewById(R.id.fl_progress)
+        container = (parentLayout as View).findViewById(R.id.fl_container)
+        progress = (parentLayout as View).findViewById(R.id.fl_progress)
 
         container?.apply {
             visibility = showLoading.viewVisibility()
@@ -127,8 +124,19 @@ class RelativeLayoutLoading(context: Context, attrs: AttributeSet) :
     fun loadingProgress(boolean: Boolean) {
         showLoading = boolean
         container?.visibility = boolean.viewVisibility()
+        hideKeypad()
         //startAnimations()
     }
+
+    private fun hideKeypad() {
+        val view = parentLayout
+        if (view != null) {
+            val imm: InputMethodManager =
+                context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
 
     private fun startAnimations() {
         val animate = parentLayout?.width?.toFloat()?.let {
