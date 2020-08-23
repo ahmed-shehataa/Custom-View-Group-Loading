@@ -1,5 +1,5 @@
 # Custom-View-Group-Loading 
-A simple Lib to make a progress bar indicator behind the views to show loading or progress something
+A simple Lib to make a progress bar indicator in front of the views to show loading or progress something
 
 
 <p float="left">
@@ -59,7 +59,7 @@ dependencies {
 	// to show / hide progress
 	rl_loading.loadingProgress(true)
 	
-	// to chnage layer opacity
+	// to change layer opacity (value from 0 to 1)
         rl_loading.setContainerAlpha(1F)
 
 ```
