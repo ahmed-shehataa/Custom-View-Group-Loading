@@ -6,7 +6,9 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.TranslateAnimation
 import android.widget.FrameLayout
 import android.widget.ProgressBar
@@ -63,12 +65,8 @@ class RelativeLayoutLoading(context: Context, attrs: AttributeSet) :
 
         container?.apply {
             visibility = showLoading.viewVisibility()
-        }
-
-        // Set width & height for it
-        parentLayout.apply {
-            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
             alpha = containerAlpha
+            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         }
 
 
@@ -81,17 +79,22 @@ class RelativeLayoutLoading(context: Context, attrs: AttributeSet) :
         }
     }
 
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        return container?.visibility == View.VISIBLE && showLoading
+    }
 
+    /*
     private fun disableChild(b: Boolean) {
         for (i in 0 until childCount) {
             val child: View = getChildAt(i)
-            child.isClickable = b
+            child.isEnabled = b
         }
     }
 
+     */
+
     private fun setupAttributes(attrs: AttributeSet) {
         // Obtain a typed array of attributes
-
         val typedArray = context.theme.obtainStyledAttributes(
             attrs, R.styleable.RelativeLayoutLoading,
             0, 0
@@ -122,7 +125,7 @@ class RelativeLayoutLoading(context: Context, attrs: AttributeSet) :
     }
 
     fun loadingProgress(boolean: Boolean) {
-        showLoading = false
+        showLoading = boolean
         container?.visibility = boolean.viewVisibility()
         //startAnimations()
     }
@@ -162,9 +165,11 @@ class RelativeLayoutLoading(context: Context, attrs: AttributeSet) :
         p8: Int
     ) {
 
-        if (showLoading) {
+       /* if (showLoading) {
             disableChild(false)
         } else
-            disableChild(true)
+            disableChild(true)*/
     }
+
+
 }

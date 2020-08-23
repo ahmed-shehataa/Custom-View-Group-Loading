@@ -13,18 +13,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         startHandler()
 
-
         btn.setOnClickListener {
-            //rl_loading.loadingProgress(true)
-            //startHandler()
-            btn.visibility = View.GONE
+            rl_loading.loadingProgress(true)
+            startHandler()
         }
-
-        //rl_loading.loadingProgress(true)
-        //rl_loading.setContainerAlpha(1F)
-
 
     }
 
@@ -33,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             rl_loading.loadingProgress(false)
 
-        }, 2000)
+        }, 4000)
 
     }
 
