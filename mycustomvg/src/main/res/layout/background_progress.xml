@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fl_container"
     android:background="@color/colorBlack"
-    android:alpha=".9"
+    android:alpha=".5"
     >
 
     <ProgressBar

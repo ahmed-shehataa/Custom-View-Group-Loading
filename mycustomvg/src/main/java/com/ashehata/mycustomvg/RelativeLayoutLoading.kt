@@ -1,13 +1,12 @@
 package com.ashehata.mycustomvg
 
-import android.app.Activity
 import android.content.Context
-import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.animation.TranslateAnimation
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.ProgressBar
@@ -55,7 +54,6 @@ class RelativeLayoutLoading(context: Context, attrs: AttributeSet) :
 
         parentLayout = inflater.inflate(R.layout.background_progress, this, true)
 
-
         // set up views ref
         container = (parentLayout as View).findViewById(R.id.fl_container)
         progress = (parentLayout as View).findViewById(R.id.fl_progress)
@@ -66,29 +64,24 @@ class RelativeLayoutLoading(context: Context, attrs: AttributeSet) :
             layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         }
 
-
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             (container as FrameLayout).elevation = DEFAULT_ELEVATION
-            progress.setIndeterminateTintList(ColorStateList.valueOf(progressColor));
+            //progress.setIndeterminateTintList(ColorStateList.valueOf(progressColor));
 
         } else {
             (container as FrameLayout).bringToFront()
         }
+
     }
+
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-        return container?.visibility == View.VISIBLE && showLoading
+        return isProgressNotLoading()
     }
 
-    /*
-    private fun disableChild(b: Boolean) {
-        for (i in 0 until childCount) {
-            val child: View = getChildAt(i)
-            child.isEnabled = b
-        }
-    }
+    private fun isProgressNotLoading() =
+        container?.visibility == View.VISIBLE && showLoading
 
-     */
 
     private fun setupAttributes(attrs: AttributeSet) {
         // Obtain a typed array of attributes
@@ -123,9 +116,17 @@ class RelativeLayoutLoading(context: Context, attrs: AttributeSet) :
 
     fun loadingProgress(boolean: Boolean) {
         showLoading = boolean
+        handleAnimation()
         container?.visibility = boolean.viewVisibility()
         hideKeypad()
-        //startAnimations()
+    }
+
+    private fun handleAnimation() {
+        if (showLoading) {
+            startAnimations(false)
+        } else {
+            startAnimations(true)
+        }
     }
 
     private fun hideKeypad() {
@@ -138,19 +139,28 @@ class RelativeLayoutLoading(context: Context, attrs: AttributeSet) :
     }
 
 
-    private fun startAnimations() {
-        val animate = parentLayout?.width?.toFloat()?.let {
-            TranslateAnimation(
-                0F,
-                it, 0F, 0F
-            )
-        }
-        animate?.duration = 300
-        animate?.fillAfter = true
-        container?.startAnimation(animate)
-        container?.visibility = GONE
+    private fun endAnimations() {
+        val anim = AlphaAnimation(containerAlpha, 0.0f)
+        anim.duration = 500
+        anim.repeatMode = Animation.RELATIVE_TO_SELF
+        container?.startAnimation(anim)
+
     }
 
+    private fun startAnimations(ifEnd: Boolean) {
+        val anim = if (ifEnd) {
+            AlphaAnimation(containerAlpha, 0F)
+        } else {
+            AlphaAnimation(0F, containerAlpha)
+        }
+
+        anim.apply {
+            duration = 500
+            repeatMode = Animation.INFINITE
+            container?.startAnimation(this)
+        }
+
+    }
 
     fun setContainerAlpha(mAlpha: Float) {
         container?.alpha = mAlpha
@@ -173,11 +183,6 @@ class RelativeLayoutLoading(context: Context, attrs: AttributeSet) :
         p8: Int
     ) {
 
-       /* if (showLoading) {
-            disableChild(false)
-        } else
-            disableChild(true)*/
     }
-
 
 }

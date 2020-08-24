@@ -7,6 +7,10 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,23 +18,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        startHandler()
-
         btn.setOnClickListener {
-            rl_loading.loadingProgress(true)
-            startHandler()
+            GlobalScope.launch(Dispatchers.Main) {
+                rl_loading.loadingProgress(true)
+                delay(3000)
+                rl_loading.loadingProgress(false)
+
+            }
         }
 
     }
 
-
-    private fun startHandler() {
-        Handler(Looper.getMainLooper()).postDelayed({
-            rl_loading.loadingProgress(false)
-
-        }, 4000)
-
-    }
 
 
 }
