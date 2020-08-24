@@ -18,12 +18,17 @@ allprojects {
 ```
 
 **Step 2.** Add the dependency
-
+ 
 ``` groovy
 dependencies {
-	  implementation 'com.github.Eng-AhmedShehata:Custom-View-Group-Loading:1.5'
+	  implementation 'com.github.Eng-AhmedShehata:Custom-View-Group-Loading:Tag'
 	}
 ```
+
+**Hint :**  
+ replace Tag with latest verion here
+ [![](https://jitpack.io/v/Eng-AhmedShehata/Custom-View-Group-Loading.svg)](https://jitpack.io/#Eng-AhmedShehata/Custom-View-Group-Loading)
+
 
 ---
 
