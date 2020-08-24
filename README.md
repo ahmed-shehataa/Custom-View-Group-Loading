@@ -3,7 +3,7 @@ A simple Lib to make a progress bar indicator in front of the views to show load
 
 
 <p float="left">
-	<img src="ezgif-4-8212e1617656.gif"  width="250"  />
+	<img src="img/example.gif"  width="250"  />
 </p>
 
 **Step 1.** Add it in your root build.gradle at the end of repositories:
@@ -21,7 +21,7 @@ allprojects {
 
 ``` groovy
 dependencies {
-	  implementation 'com.github.Eng-AhmedShehata:Custom-View-Group-Loading:1.4'
+	  implementation 'com.github.Eng-AhmedShehata:Custom-View-Group-Loading:1.5'
 	}
 ```
 
